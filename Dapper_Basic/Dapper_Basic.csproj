@@ -6,4 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="dapper" Version="2.1.21" />
+    <PackageReference Include="microsoft.data.sqlclient" Version="5.1.2" />
+    <PackageReference Include="microsoft.entityframeworkcore.sqlserver" Version="7.0.13" />
+  </ItemGroup>
+
 </Project>
