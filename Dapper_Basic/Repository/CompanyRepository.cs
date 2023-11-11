@@ -22,7 +22,7 @@ namespace Dapper_Basic.Repository
         //____________ 1. Dapper Query Approch ______________
         #region Query_Approch  (like SQL)
         //1. db.Query<T>(query,obj);      T  is Return Object  Generic (int, class ,......)
-        //2. db.Execute
+        //2. db.Execute()   used when you don't want to return
         public Company Add(Company obj)
         {
             var sqlQuery = @"insert into tblCompany(Name,Address,City,State,PostalCode) values (@name,@address,@city,@postalCode)"+
@@ -52,11 +52,18 @@ namespace Dapper_Basic.Repository
         }
         public void Remove()
         {
+
             return;
         }
-
-
+        public Company Update(Company obj)
+        {
+            var sqlQuery = @"update tblCompany set Name = @name,Address = @address,City = @City, PostalCode = @postalCode where Id = @id";
+            var id = _db.Execute(sqlQuery, new {Id = obj.Id});
+            return obj;
+        }
         #endregion
 
+
+        //____________ 2. Dapper Proccedure Approch ______________
     }
 }

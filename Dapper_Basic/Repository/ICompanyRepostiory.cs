@@ -8,6 +8,6 @@ namespace Dapper_Basic.Repository
         Company Find(int id);
         List<Company> GetAll();
         void Remove();
-
+        Company Update(Company obj);
     }
 }
