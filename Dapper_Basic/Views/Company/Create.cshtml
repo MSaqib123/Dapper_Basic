@@ -1,0 +1,29 @@
+﻿@model Company
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input class="form form-control" type="text" id="" asp-for="Name">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Address</label>
+        <input class="form form-control" type="text" asp-for="Address">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">PostalCode</label>
+        <input class="form form-control" type="text" asp-for="PostalCode">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">City</label>
+        <input class="form form-control" type="text" asp-for="City">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">State</label>
+        <input class="form form-control" type="text" asp-for="State">
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary">Submit</button>
+    </div>
+</form>
+

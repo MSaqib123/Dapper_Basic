@@ -2,12 +2,13 @@
 
 namespace Dapper_Basic.Repository
 {
-    public interface ICompanyRepostiory
+    public interface ICompanyRepository
     {
         Company Add(Company obj);
         Company Find(int id);
         List<Company> GetAll();
-        void Remove();
+        void Remove(int Id);
         Company Update(Company obj);
+        
     }
 }

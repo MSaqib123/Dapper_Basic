@@ -1,8 +1,10 @@
+using Dapper_Basic.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSingleton<ICompanyRepository, CompanyRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
