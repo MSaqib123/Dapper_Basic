@@ -1,0 +1,32 @@
+﻿@model EmployeeVM
+
+<form asp-action="Edit" method="post">
+    @Html.AntiForgeryToken();
+    <input asp-for="Employee.Id" hidden />
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input class="form form-control" type="text" id="" asp-for="Employee.Name">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Address</label>
+        <input class="form form-control" type="text" asp-for="Employee.Email">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">PostalCode</label>
+        <input class="form form-control" type="text" asp-for="Employee.Phone">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">City</label>
+        <input class="form form-control" type="text" asp-for="Employee.Title">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">State</label>
+        <select asp-for="Employee.CompanyId" class="form form-select" asp-items="@Model.ListCompany">
+            <option disabled selected>Select Company</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-primary">Submit</button>
+    </div>
+</form>
+
