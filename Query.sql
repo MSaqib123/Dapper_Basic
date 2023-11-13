@@ -44,7 +44,7 @@ delete tblCompany where Id = @Id
 --===================================================
 -- 2. Procedure Base
 --===================================================
-
+--____________ Company _________________
 create proc spSelectCompanyById
 @id int
 as
@@ -54,8 +54,7 @@ begin
 end
 
 
-create proc spSelectCompanys
-@id int
+alter proc spSelectCompanys
 as
 begin
 	select * from tblCompany
@@ -77,7 +76,7 @@ begin
 end
 
 
-create proc spUpdateCompany
+alter proc spUpdateCompany
 @id int,
 @name varchar(25),
 @address varchar(25),
@@ -93,6 +92,7 @@ begin
 	City = @City,
 	State = @state,
 	PostalCode  = @PostalCode
+	where Id = @id
 end
 
 create proc spDeleteCompanyById
@@ -104,5 +104,65 @@ begin
 end
 
 
+
+
+--____________ Employee _________________
+create proc spSelectEmployeeById
+@id int
+as
+begin
+	select * from tblEmployee
+	where Id = @id
+end
+
+
+create proc spSelectEmployees
+as
+begin
+	select * from tblEmployee
+end
+
+create proc spInsertEmployee
+@id int output,
+@name varchar(25),
+@title varchar(25),
+@email varchar(25),
+@phone varchar(25),
+@companyId varchar(25)
+as
+begin
+	insert into tblEmployee(Name,Title,Email,Phone,CompanyId)
+	values (@name,@title,@email,@phone,@companyId)
+	--Select Cast(Scope_Identity() as int)
+	select @Id = SCOPE_IDENTITY()
+end
+
+
+create proc spUpdateEmployee
+@id int ,
+@name varchar(25),
+@title varchar(25),
+@email varchar(25),
+@phone varchar(25),
+@companyId varchar(25)
+as
+begin
+	update tblEmployee
+	set 
+	name = @name,
+	Title = @title,
+	Email = @email,
+	Phone = @phone,
+	CompanyId  = @companyId
+	where Id = @id
+end
+
+create proc spDeleteEmployeeById
+@id int
+as
+begin
+	delete from tblEmployee
+	where Id = @id
+end
 
 
