@@ -92,7 +92,7 @@ namespace Dapper_Basic.Repository
             parameters.Add("@PostalCode", obj.PostalCode);
 
             _db.Execute("spInsertCompany", parameters, commandType: CommandType.StoredProcedure);
-            obj.Id = parameters.Get<int>("Id");
+            obj.Id = parameters.Get<int>("id");
             return obj;
         }
         public Company Update(Company obj)

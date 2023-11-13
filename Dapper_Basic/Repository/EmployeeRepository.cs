@@ -70,13 +70,13 @@ namespace Dapper_Basic.Repository
             var parameters = new DynamicParameters();
             parameters.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
             parameters.Add("@name", obj.Name);
-            parameters.Add("@address", obj.Title);
-            parameters.Add("@City", obj.Email);
-            parameters.Add("@state", obj.Phone);
-            parameters.Add("@PostalCode", obj.CompanyId);
+            parameters.Add("@title", obj.Title);
+            parameters.Add("@email", obj.Email);
+            parameters.Add("@phone", obj.Phone);
+            parameters.Add("@CompanyId", obj.CompanyId);
 
-            _db.Execute("spInsertCompany", parameters, commandType: CommandType.StoredProcedure);
-            obj.Id = parameters.Get<int>("Id");
+            _db.Execute("spInsertEmployee", parameters, commandType: CommandType.StoredProcedure);
+            obj.Id = parameters.Get<int>("id");
             return obj;
         }
         public Employee Find(int id)
@@ -102,12 +102,11 @@ namespace Dapper_Basic.Repository
             var parameters = new DynamicParameters();
             parameters.Add("@id", 0, DbType.Int32);
             parameters.Add("@name", obj.Name);
-            parameters.Add("@address", obj.Title);
-            parameters.Add("@City", obj.Email);
-            parameters.Add("@state", obj.Phone);
-            parameters.Add("@PostalCode", obj.CompanyId);
-
-            _db.Execute("spInsertCompany", parameters, commandType: CommandType.StoredProcedure);
+            parameters.Add("@title", obj.Title);
+            parameters.Add("@email", obj.Email);
+            parameters.Add("@phone", obj.Phone);
+            parameters.Add("@CompanyId", obj.CompanyId);
+            _db.Execute("spUpdateEmployee", parameters, commandType: CommandType.StoredProcedure);
             return obj;
         }
         #endregion
