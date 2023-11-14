@@ -1,6 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
 namespace Dapper_Basic.Models
 {
+    [Table("tblEmployee")]
     public class Employee
     {
         [Key]

@@ -2,6 +2,7 @@
 
 namespace Dapper_Basic.Models
 {
+    [Table("tblCompany")]
     public class Company
     {
         [Key]

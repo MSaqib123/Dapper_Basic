@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Dapper_Basic.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -113,7 +114,9 @@ namespace Dapper_Basic.Repository
 
         //____________ 3. Dapper Contrib Approch _________
         #region Dapper_Contrib
-        //1commandType  :    storeProcedure , text
+        //____ Note  ____
+        //1. for Contrib  method  ---> Model must have  [Key]  dapper.attibute in Model
+        //2. for Contrib  ---> add   Table()   attibute in Module with SQL table Name
         public Employee Add(Employee obj)
         {
             var parameters = new DynamicParameters();
@@ -130,15 +133,11 @@ namespace Dapper_Basic.Repository
         }
         public Employee Find(int id)
         {
-            string sqlQuery = @"spSelectEmployeeById";
-            var s = _db.Query<Employee>(sqlQuery, new { Id = id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-            return s;
+            return _db.Get<Employee>(id);
         }
         public List<Employee> GetAll()
         {
-            string sqlQuery = @"spSelectEmployees";
-            var s = _db.Query<Employee>(sqlQuery, commandType: CommandType.StoredProcedure).ToList();
-            return s;
+            return _db.GetAll<Employee>().ToList();
         }
         public void Remove(int Id)
         {

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using Dapper.Contrib.Extensions;
 using Dapper_Basic.Models;
 using Microsoft.Data.SqlClient;
 using System.Data;
@@ -66,72 +67,68 @@ namespace Dapper_Basic.Repository
         //____________ 2. Dapper Proccedure Approch ______________
         #region Dapper Proccedure Approch
         //1commandType  :    storeProcedure , text
-        public List<Company> GetAll()
-        {
-            string sqlQuery = @"spSelectCompanys";
-            var s = _db.Query<Company>(sqlQuery, commandType: CommandType.StoredProcedure);
-            return s.ToList();
-        }
+        //public List<Company> GetAll()
+        //{
+        //    string sqlQuery = @"spSelectCompanys";
+        //    var s = _db.Query<Company>(sqlQuery, commandType: CommandType.StoredProcedure);
+        //    return s.ToList();
+        //}
 
-        public Company Find(int id)
-        {
-            string sqlQuery = @"spSelectCompanyById";
-            var s = _db.Query<Company>(sqlQuery, new { Id = id }, commandType: CommandType.StoredProcedure);
-            return s.FirstOrDefault();
-        }
+        //public Company Find(int id)
+        //{
+        //    string sqlQuery = @"spSelectCompanyById";
+        //    var s = _db.Query<Company>(sqlQuery, new { Id = id }, commandType: CommandType.StoredProcedure);
+        //    return s.FirstOrDefault();
+        //}
 
-        //2. Dynamic Parameters
-        public Company Add(Company obj)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@name", obj.Name);
-            parameters.Add("@address", obj.Address);
-            parameters.Add("@City", obj.City);
-            parameters.Add("@state", obj.State);
-            parameters.Add("@PostalCode", obj.PostalCode);
+        ////2. Dynamic Parameters
+        //public Company Add(Company obj)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
+        //    parameters.Add("@name", obj.Name);
+        //    parameters.Add("@address", obj.Address);
+        //    parameters.Add("@City", obj.City);
+        //    parameters.Add("@state", obj.State);
+        //    parameters.Add("@PostalCode", obj.PostalCode);
 
-            _db.Execute("spInsertCompany", parameters, commandType: CommandType.StoredProcedure);
-            obj.Id = parameters.Get<int>("id");
-            return obj;
-        }
-        public Company Update(Company obj)
-        {
-            var parameters = new DynamicParameters();
-            parameters.Add("@id", obj.Id ,DbType.Int32);
-            parameters.Add("@name", obj.Name);
-            parameters.Add("@address", obj.Address);
-            parameters.Add("@City", obj.City);
-            parameters.Add("@state", obj.State);
-            parameters.Add("@PostalCode", obj.PostalCode);
-            _db.Execute("spUpdateCompany", parameters, commandType: CommandType.StoredProcedure);
-            return obj;
-        }
-        public void Remove(int Id)
-        {
-            var sqlQuery = @"spDeleteCompanyById";
-            _db.Execute(sqlQuery, new { id = Id } , commandType:CommandType.StoredProcedure);
-        }
+        //    _db.Execute("spInsertCompany", parameters, commandType: CommandType.StoredProcedure);
+        //    obj.Id = parameters.Get<int>("id");
+        //    return obj;
+        //}
+        //public Company Update(Company obj)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@id", obj.Id ,DbType.Int32);
+        //    parameters.Add("@name", obj.Name);
+        //    parameters.Add("@address", obj.Address);
+        //    parameters.Add("@City", obj.City);
+        //    parameters.Add("@state", obj.State);
+        //    parameters.Add("@PostalCode", obj.PostalCode);
+        //    _db.Execute("spUpdateCompany", parameters, commandType: CommandType.StoredProcedure);
+        //    return obj;
+        //}
+        //public void Remove(int Id)
+        //{
+        //    var sqlQuery = @"spDeleteCompanyById";
+        //    _db.Execute(sqlQuery, new { id = Id } , commandType:CommandType.StoredProcedure);
+        //}
         #endregion
 
 
         //____________ 3. Dapper Contrib Approch _________
         #region Dapper_Contrib
         //____ Note  ____
-        //fore Contrib  method  ---> Model must have  [Key]  dapper.attibute in Model
-
+        //1. for Contrib  method  ---> Model must have  [Key]  dapper.attibute in Model
+        //2. for Contrib  ---> add   Table()   attibute in Module with SQL table Name
         public List<Company> GetAll()
         {
-            string sqlQuery = @"spSelectCompanys";
-            var s = _db.Query<Company>(sqlQuery, commandType: CommandType.StoredProcedure);
-            return s.ToList();
+            return _db.GetAll<Company>().ToList();
         }
 
         public Company Find(int id)
         {
-            string sqlQuery = @"spSelectCompanyById";
-            var s = _db.Query<Company>(sqlQuery, new { Id = id }, commandType: CommandType.StoredProcedure);
-            return s.FirstOrDefault();
+            return _db.Get<Company>(id);
         }
 
         public Company Add(Company obj)
