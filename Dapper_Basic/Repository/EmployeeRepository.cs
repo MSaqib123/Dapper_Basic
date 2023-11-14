@@ -119,16 +119,8 @@ namespace Dapper_Basic.Repository
         //2. for Contrib  ---> add   Table()   attibute in Module with SQL table Name
         public Employee Add(Employee obj)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@name", obj.Name);
-            parameters.Add("@title", obj.Title);
-            parameters.Add("@email", obj.Email);
-            parameters.Add("@phone", obj.Phone);
-            parameters.Add("@CompanyId", obj.CompanyId);
-
-            _db.Execute("spInsertEmployee", parameters, commandType: CommandType.StoredProcedure);
-            obj.Id = parameters.Get<int>("id");
+            var id = _db.Insert(obj);
+            obj.Id =(int)id;
             return obj;
         }
         public Employee Find(int id)

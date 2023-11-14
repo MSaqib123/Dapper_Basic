@@ -133,16 +133,8 @@ namespace Dapper_Basic.Repository
 
         public Company Add(Company obj)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@name", obj.Name);
-            parameters.Add("@address", obj.Address);
-            parameters.Add("@City", obj.City);
-            parameters.Add("@state", obj.State);
-            parameters.Add("@PostalCode", obj.PostalCode);
-
-            _db.Execute("spInsertCompany", parameters, commandType: CommandType.StoredProcedure);
-            obj.Id = parameters.Get<int>("id");
+            var id = _db.Insert(obj);
+            obj.Id = (int)id;
             return obj;
         }
         public Company Update(Company obj)
