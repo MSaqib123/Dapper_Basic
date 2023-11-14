@@ -139,20 +139,12 @@ namespace Dapper_Basic.Repository
         }
         public Company Update(Company obj)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@id", obj.Id, DbType.Int32);
-            parameters.Add("@name", obj.Name);
-            parameters.Add("@address", obj.Address);
-            parameters.Add("@City", obj.City);
-            parameters.Add("@state", obj.State);
-            parameters.Add("@PostalCode", obj.PostalCode);
-            _db.Execute("spUpdateCompany", parameters, commandType: CommandType.StoredProcedure);
+            _db.Update(obj);
             return obj;
         }
         public void Remove(int Id)
         {
-            var sqlQuery = @"spDeleteCompanyById";
-            _db.Execute(sqlQuery, new { id = Id }, commandType: CommandType.StoredProcedure);
+            _db.Delete(new Company { Id = Id});
         }
         #endregion
     }
