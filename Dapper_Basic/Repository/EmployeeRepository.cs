@@ -64,6 +64,55 @@ namespace Dapper_Basic.Repository
 
         //____________ 2. Dapper Proccedure Approch _________
         #region ProcceduralBase_
+        ////1commandType  :    storeProcedure , text
+        //public Employee Add(Employee obj)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@id", 0, DbType.Int32, direction: ParameterDirection.Output);
+        //    parameters.Add("@name", obj.Name);
+        //    parameters.Add("@title", obj.Title);
+        //    parameters.Add("@email", obj.Email);
+        //    parameters.Add("@phone", obj.Phone);
+        //    parameters.Add("@CompanyId", obj.CompanyId);
+
+        //    _db.Execute("spInsertEmployee", parameters, commandType: CommandType.StoredProcedure);
+        //    obj.Id = parameters.Get<int>("id");
+        //    return obj;
+        //}
+        //public Employee Find(int id)
+        //{
+        //    string sqlQuery = @"spSelectEmployeeById";
+        //    var s = _db.Query<Employee>(sqlQuery, new { Id = id } , commandType:CommandType.StoredProcedure).FirstOrDefault();
+        //    return s;
+        //}
+        //public List<Employee> GetAll()
+        //{
+        //    string sqlQuery = @"spSelectEmployees";
+        //    var s = _db.Query<Employee>(sqlQuery,commandType:CommandType.StoredProcedure).ToList();
+        //    return s;
+        //}
+        //public void Remove(int Id)
+        //{
+        //    var sqlQuery = @"spDeleteEmployeeById";
+        //    _db.Execute(sqlQuery, new { id = Id });
+        //}
+
+        //public Employee Update(Employee obj)
+        //{
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("@id", 0, DbType.Int32);
+        //    parameters.Add("@name", obj.Name);
+        //    parameters.Add("@title", obj.Title);
+        //    parameters.Add("@email", obj.Email);
+        //    parameters.Add("@phone", obj.Phone);
+        //    parameters.Add("@CompanyId", obj.CompanyId);
+        //    _db.Execute("spUpdateEmployee", parameters, commandType: CommandType.StoredProcedure);
+        //    return obj;
+        //}
+        #endregion
+
+        //____________ 3. Dapper Contrib Approch _________
+        #region Dapper_Contrib
         //1commandType  :    storeProcedure , text
         public Employee Add(Employee obj)
         {
@@ -82,13 +131,13 @@ namespace Dapper_Basic.Repository
         public Employee Find(int id)
         {
             string sqlQuery = @"spSelectEmployeeById";
-            var s = _db.Query<Employee>(sqlQuery, new { Id = id } , commandType:CommandType.StoredProcedure).FirstOrDefault();
+            var s = _db.Query<Employee>(sqlQuery, new { Id = id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
             return s;
         }
         public List<Employee> GetAll()
         {
             string sqlQuery = @"spSelectEmployees";
-            var s = _db.Query<Employee>(sqlQuery,commandType:CommandType.StoredProcedure).ToList();
+            var s = _db.Query<Employee>(sqlQuery, commandType: CommandType.StoredProcedure).ToList();
             return s;
         }
         public void Remove(int Id)
@@ -96,7 +145,6 @@ namespace Dapper_Basic.Repository
             var sqlQuery = @"spDeleteEmployeeById";
             _db.Execute(sqlQuery, new { id = Id });
         }
-
         public Employee Update(Employee obj)
         {
             var parameters = new DynamicParameters();
@@ -110,7 +158,5 @@ namespace Dapper_Basic.Repository
             return obj;
         }
         #endregion
-
-        //____________ 3. Dapper Contrib Approch _________
     }
 }

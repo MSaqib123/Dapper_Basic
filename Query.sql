@@ -60,7 +60,7 @@ begin
 	select * from tblCompany
 end
 
-create proc spInsertCompany
+alter proc spInsertCompany
 @id int output,
 @name varchar(25),
 @address varchar(25),
@@ -72,7 +72,7 @@ begin
 	insert into tblCompany (name,Address,City,State,PostalCode)
 	values (@name,@address,@City,@state,@PostalCode)
 	--Select Cast(Scope_Identity() as int)
-	select @Id = SCOPE_IDENTITY()
+	select @id = SCOPE_IDENTITY()
 end
 
 
@@ -122,7 +122,7 @@ begin
 	select * from tblEmployee
 end
 
-create proc spInsertEmployee
+alter proc spInsertEmployee
 @id int output,
 @name varchar(25),
 @title varchar(25),
@@ -134,7 +134,7 @@ begin
 	insert into tblEmployee(Name,Title,Email,Phone,CompanyId)
 	values (@name,@title,@email,@phone,@companyId)
 	--Select Cast(Scope_Identity() as int)
-	select @Id = SCOPE_IDENTITY()
+	select @id = SCOPE_IDENTITY()
 end
 
 
