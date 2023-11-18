@@ -6,6 +6,11 @@ namespace Dapper_Basic.Models
     [Table("tblCompany")]
     public class Company
     {
+        public Company()
+        {
+            EmpList = new List<Employee>();
+        }
+
         [Key]
         public int Id { get; set; }
         public string Name { get; set; }
@@ -13,7 +18,8 @@ namespace Dapper_Basic.Models
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
+        [Write(false)]
         [ValidateNever]
-        public IEnumerable<Employee> EmpList { get; set; }
+        public List<Employee> EmpList { get; set; }
     }
 }

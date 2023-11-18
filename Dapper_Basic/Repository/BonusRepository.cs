@@ -47,5 +47,37 @@ namespace Dapper_Basic.Repository
             return c;
         }
 
+        //_____ GetCompany + With All Employees with Distinct ________
+        public List<Company> GetCompanyWithEmployeeWithDistinct()
+        {
+            string SqlQuery = @"select c.* , e.* from tblCompany c inner join tblEmployee e on e.CompanyId = c.Id";
+
+            var companyDic = new Dictionary<int, Company>();
+            //__ dapper ____
+            var company = _db.Query<Company, Employee, Company>(SqlQuery, (c, e) => {
+                if (!companyDic.TryGetValue(c.Id, out var currentCompany))
+                {
+                    currentCompany = c;
+                    companyDic.Add(currentCompany.Id, currentCompany);
+                }
+                //if (!companyDic.TryGetValue(c.Id, out var currentCompany))
+                //{
+                //    currentCompany = c;
+                //    currentCompany.EmpList = new List<Employee>(); // Initialize EmpList
+                //    companyDic.Add(currentCompany.Id, currentCompany);
+                //}
+
+                //if (currentCompany.EmpList == null)
+                //{
+                //    currentCompany.EmpList = new List<Employee>(); // Ensure EmpList is not null
+                //}
+
+                currentCompany.EmpList.Add(e);
+                return currentCompany;
+            },splitOn: "Id");
+            return company.Distinct().ToList();
+        }
+
+
     }
 }

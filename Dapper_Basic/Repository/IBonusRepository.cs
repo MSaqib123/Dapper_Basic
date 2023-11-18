@@ -6,5 +6,7 @@ namespace Dapper_Basic.Repository
     {
         List<Employee> GetAllEmployeeWithCompany(int CompanyId);
         Company GetCompanyWithAllEmployee(int id);
+
+        List<Company> GetCompanyWithEmployeeWithDistinct();
     }
 }
