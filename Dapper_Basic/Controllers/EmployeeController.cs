@@ -11,46 +11,55 @@ namespace Dapper_Basic.Controllers
     {
         private readonly IEmployeeRepository _repo;
         private readonly ICompanyRepository _repoComp;
+        private readonly IBonusRepository _bonusRepo;
 
-        public EmployeeController(IEmployeeRepository repo, ICompanyRepository repoComp)
+        public EmployeeController(
+                IEmployeeRepository repo,
+                ICompanyRepository repoComp,
+                IBonusRepository bonusRepo
+            )
         {
             _repo = repo;
             _repoComp = repoComp;
+            _bonusRepo = bonusRepo;
         }
 
         public IActionResult Index()
         {
             EmployeeVM vm = new EmployeeVM();
 
-            /*
-             _______________ 1... Single Model get ______________
-             vm.Employees = _repo.GetAll();
-            */
-
-
-            /*
-             _______________ 2... N + 1 __________________________
-             this is Bad Logic to get   Multiple Models Record
-             ---- if we have 11 Record
-             ---- then we ha 10 Calles to database
-             ---- what will happend if we have  10000 of records
-            */
-            #region N+1
-            var employees = _repo.GetAll();
-            foreach (var obj in employees)
-            {
-                obj.Company = _repoComp.Find(obj.CompanyId);
-            }
-            vm.Employees = employees;
+            //_______________ 1... Single Model get ______________
+            #region Single_Data
+            //vm.Employees = _repo.GetAll();
             #endregion
 
+
+            //_______________ 2... N + 1 __________________________
+            #region N+1
             /*
-             _______________ 3... N + 1 __________________________
              this is Bad Logic to get   Multiple Models Record
              ---- if we have 11 Record
              ---- then we ha 10 Calles to database
              ---- what will happend if we have  10000 of records
-            */ 
+            */
+
+            //var employees = _repo.GetAll();
+            //foreach (var obj in employees)
+            //{
+            //    obj.Company = _repoComp.Find(obj.CompanyId);
+            //}
+            //vm.Employees = employees;
+            #endregion
+
+            //_______________ 3... 1 + 1 __________________________
+            #region 1 to 1 with 1 DB Call
+            /*
+             we Will do now with Single DBCall 
+                using dapper  Bonus repository
+            */
+            vm.Employees = _bonusRepo.GetAllEmployeeWithCompany();
+            #endregion
+
             return View(vm);
         }
 
