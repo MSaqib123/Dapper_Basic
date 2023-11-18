@@ -15,6 +15,7 @@
             <th>City</th>
             <th>State</th>
             <th>Action</th>
+            <th>Manage Employee</th>
         </tr>
     </thead>
     <tbody>
@@ -30,6 +31,9 @@
                 <td>
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" asp-controller="Employee" asp-action="Index" asp-route-companyId="@item.Id">ManageEmployee</a>
                 </td>
             </tr>
         }

@@ -15,14 +15,19 @@ namespace Dapper_Basic.Repository
             _db = new SqlConnection(config.GetConnectionString("Default"));
         }
         
-        public List<Employee> GetAllEmployeeWithCompany()
+        public List<Employee> GetAllEmployeeWithCompany(int id)
         {
             string SqlQuery = @"select e.*,c.* from tblEmployee e inner join tblCompany c on c.id = e.companyId";
+            if (id != 0 && id > 0)
+            {
+                SqlQuery += " WHERE e.CompanyId = @Id";
+            }
             var emp = _db.Query<Employee, Company, Employee>(SqlQuery, (emp, comp) =>
             {
                 emp.Company = comp;
                 return emp;
-            },splitOn:"CompanyId");
+                //},splitOn:"CompanyId");
+            }, new {id}, splitOn:"CompanyId");
             return emp.ToList();
         }
     }

@@ -24,7 +24,7 @@ namespace Dapper_Basic.Controllers
             _bonusRepo = bonusRepo;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int companyId = 0)
         {
             EmployeeVM vm = new EmployeeVM();
 
@@ -57,7 +57,7 @@ namespace Dapper_Basic.Controllers
              we Will do now with Single DBCall 
                 using dapper  Bonus repository
             */
-            vm.Employees = _bonusRepo.GetAllEmployeeWithCompany();
+            vm.Employees = _bonusRepo.GetAllEmployeeWithCompany(companyId);
             #endregion
 
             return View(vm);

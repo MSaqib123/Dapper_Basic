@@ -4,6 +4,6 @@ namespace Dapper_Basic.Repository
 {
     public interface IBonusRepository
     {
-        List<Employee> GetAllEmployeeWithCompany();
+        List<Employee> GetAllEmployeeWithCompany(int CompanyId);
     }
 }
