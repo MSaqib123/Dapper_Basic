@@ -25,7 +25,6 @@ namespace Dapper_Basic.Controllers
             _bonusRepo = bonusRepo;
         }
         
-
         public IActionResult Index()
         {
             List<Company> obj = new List<Company>();
@@ -63,10 +62,11 @@ namespace Dapper_Basic.Controllers
 
         public IActionResult deleteDummy()
         {
-            return View();
+            int[] companyIdToRemove = _bonusRepo.FilterCompanyByName("test").Select(i=>i.Id).ToArray();
+            _bonusRepo.RemoveRange(companyIdToRemove);
+            return RedirectToAction("Index");
         }
         
-
 
         public IActionResult Privacy()
         {

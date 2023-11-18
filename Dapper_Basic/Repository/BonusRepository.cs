@@ -113,6 +113,14 @@ namespace Dapper_Basic.Repository
 
         }
 
+        public void RemoveRange(int[] companyId)
+        {
+            _db.Query("Delete from tblCompany where id in @id" , new {id = companyId });
+        }
+        public List<Company> FilterCompanyByName(string name)
+        {
+            return _db.Query<Company>("SELECT * FROM tblCompany where name like'%' + @name + '%'", new {name}).ToList();
+        }
 
     }
 }

@@ -6,9 +6,9 @@ namespace Dapper_Basic.Repository
     {
         List<Employee> GetAllEmployeeWithCompany(int CompanyId);
         Company GetCompanyWithAllEmployee(int id);
-
         List<Company> GetCompanyWithEmployeeWithDistinct();
-
         void InsertCompanyWithEmployee(Company obj);
+        void RemoveRange(int[] companyId);
+        List<Company> FilterCompanyByName(string name);
     }
 }
