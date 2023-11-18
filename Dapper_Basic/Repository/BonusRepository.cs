@@ -32,5 +32,20 @@ namespace Dapper_Basic.Repository
             return emp.ToList();
         }
 
+        //_____ GetCompany + With All Employee  ________
+        public Company GetCompanyWithAllEmployee(int id)
+        {
+            string SqlQuery = @"select c.* from tblCompany c where c.id = @id"
+                + " select e.* from tblEmployee e where e.CompanyId = @id";
+
+            Company c = new Company();
+            using (var lists = _db.QueryMultiple(SqlQuery, new { id}))
+            {
+                c = lists.Read<Company>().ToList().FirstOrDefault();
+                c.EmpList = lists.Read<Employee>().ToList();
+            }
+            return c;
+        }
+
     }
 }

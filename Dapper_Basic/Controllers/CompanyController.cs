@@ -8,10 +8,15 @@ namespace Dapper_Basic.Controllers
     public class CompanyController : Controller
     {
         private readonly ICompanyRepository _repo;
+        private readonly IBonusRepository _bonRepo;
 
-        public CompanyController(ICompanyRepository repo)
+        public CompanyController(
+            ICompanyRepository repo,
+            IBonusRepository bonRepo
+            )
         {
             _repo = repo;
+            _bonRepo = bonRepo;
         }
 
         public IActionResult Index()
@@ -80,5 +85,18 @@ namespace Dapper_Basic.Controllers
             _repo.Remove(id);
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Detail(int id)
+        {
+            Company obj = new Company();
+            obj = _bonRepo.GetCompanyWithAllEmployee(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
     }
 }

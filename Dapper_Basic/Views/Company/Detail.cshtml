@@ -1,0 +1,51 @@
+﻿@model Company
+
+<h1>Company Detail</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>PostalCode</th>
+            <th>City</th>
+            <th>State</th>
+        </tr>
+    </thead>
+    <tbody>
+            <tr>
+                <td>@Model.Id</td>
+                <td>@Model.Name</td>
+                <td>@Model.Address</td>
+                <td>@Model.PostalCode</td>
+                <td>@Model.City</td>
+                <td>@Model.State</td>
+            </tr>
+    </tbody>
+</table>
+
+<br/>
+<h3>Employees of the Company</h3>
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.EmpList)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Phone</td>
+            </tr>
+        }
+    </tbody>
+</table>

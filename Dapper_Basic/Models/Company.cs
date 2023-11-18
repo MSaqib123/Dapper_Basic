@@ -1,4 +1,5 @@
 ﻿using Dapper.Contrib.Extensions;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 namespace Dapper_Basic.Models
 {
@@ -12,5 +13,7 @@ namespace Dapper_Basic.Models
         public string City { get; set; }
         public string State { get; set; }
         public string PostalCode { get; set; }
+        [ValidateNever]
+        public IEnumerable<Employee> EmpList { get; set; }
     }
 }
