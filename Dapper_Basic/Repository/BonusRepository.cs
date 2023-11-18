@@ -15,6 +15,7 @@ namespace Dapper_Basic.Repository
             _db = new SqlConnection(config.GetConnectionString("Default"));
         }
         
+        //_____ GetAllEmploye  + Employee Assosiative to Company ________
         public List<Employee> GetAllEmployeeWithCompany(int id)
         {
             string SqlQuery = @"select e.*,c.* from tblEmployee e inner join tblCompany c on c.id = e.companyId";
@@ -30,5 +31,6 @@ namespace Dapper_Basic.Repository
             }, new {id}, splitOn:"CompanyId");
             return emp.ToList();
         }
+
     }
 }

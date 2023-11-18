@@ -25,6 +25,9 @@ namespace Dapper_Basic.Controllers
             _bonusRepo = bonusRepo;
         }
 
+        //_____ Adding Query Which Mange Employees of  Company ________
+        //companyId = 0   AllEmploye
+        //companId > 0   getThoseEmployees assoiative to Company
         public IActionResult Index(int companyId = 0)
         {
             EmployeeVM vm = new EmployeeVM();
