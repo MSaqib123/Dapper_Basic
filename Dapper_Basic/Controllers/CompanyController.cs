@@ -26,6 +26,7 @@ namespace Dapper_Basic.Controllers
             Company obj = new Company();
             return View(obj);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Company obj)
@@ -41,6 +42,7 @@ namespace Dapper_Basic.Controllers
                 return View();
             }
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -51,6 +53,7 @@ namespace Dapper_Basic.Controllers
             }
             return View(obj);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Company obj)
@@ -66,7 +69,6 @@ namespace Dapper_Basic.Controllers
                 return View();
             }
         }
-
 
         public IActionResult Delete(int id)
         {
