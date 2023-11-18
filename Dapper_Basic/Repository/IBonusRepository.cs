@@ -8,5 +8,7 @@ namespace Dapper_Basic.Repository
         Company GetCompanyWithAllEmployee(int id);
 
         List<Company> GetCompanyWithEmployeeWithDistinct();
+
+        void InsertCompanyWithEmployee(Company obj);
     }
 }

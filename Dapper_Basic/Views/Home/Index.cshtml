@@ -3,14 +3,25 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Dapper Project</h1>
+<div class="d-flex justify-content-between justify-content-center align-item-center align-content-center">
+    <div class="p-2">
+        <h1 class="display-4">Dapper Project</h1>
+    </div>
+    <div class="p-2">
+        <a class="btn-sm btn-primary" asp-action="addDummy">Insert Dummy Record</a>
+        <a class="btn-sm btn-danger" asp-action="deleteDummy">Delete Dummy Record</a>
+    </div>
+</div>
 
-
+<div>
     @foreach (var comp in Model)
     {
         <br />
-        <h3>@comp.Name</h3>
+        <div class="d-flex">
+            <div class="p-2 flex-grow-1">
+                <h3>@comp.Name</h3>
+            </div>
+        </div>
         <br />
 
         <table class="table table-striped">

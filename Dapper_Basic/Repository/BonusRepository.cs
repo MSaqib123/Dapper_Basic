@@ -79,5 +79,40 @@ namespace Dapper_Basic.Repository
         }
 
 
+        //_________ Insert Company With Employee ____________
+        //_____ GetCompany + With All Employees with Distinct ________
+        public void InsertCompanyWithEmployee(Company obj)
+        {
+            //____ Insert Company ______
+            var sqlQuery = @"insert into tblCompany(Name,Address,City,State,PostalCode) values (@name,@address,@city,@state,@postalCode)" +
+                    @"Select Cast(Scope_Identity() as int)";
+            var id = _db.Query<int>(sqlQuery, new
+            {
+                name = obj.Name,
+                address = obj.Address,
+                city = obj.City,
+                state = obj.State,
+                postalCode = obj.PostalCode
+            });
+            obj.Id = id.FirstOrDefault();
+
+            //____ Insert Employee ______
+            foreach (var item in obj.EmpList)
+            {
+                var empQuery = @"insert into tblEmployee(Name,Email,Phone,Title,CompanyId) values (@name,@email,@phone,@title,@companyIdFk)" +
+                    @"Select Cast(Scope_Identity() as int)";
+                var empid = _db.Query<int>(empQuery, new
+                {
+                    name = item.Name,
+                    email = item.Email,
+                    phone = item.Phone,
+                    title = item.Title,
+                    companyIdFk = obj.Id
+                });
+            }
+
+        }
+
+
     }
 }

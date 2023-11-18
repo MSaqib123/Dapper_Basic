@@ -37,6 +37,35 @@ namespace Dapper_Basic.Controllers
             return View(obj);
         }
         
+        public IActionResult addDummy()
+        {
+            Company company = new Company()
+            {
+                Name = "Test -- " + Guid.NewGuid().ToString(),
+                Address = "Test address",
+                City = "abc",
+                PostalCode = "test",
+                State = "test",
+                EmpList = new List<Employee>()
+            };
+
+            List<Employee> emp = new List<Employee>()
+            {
+                new Employee{Email="Email1234",Name="Test :: " + Guid.NewGuid().ToString(),Phone="234",Title="title"},
+                new Employee{Email="Emailss",Name="Test :: " + Guid.NewGuid().ToString(),Phone="234",Title="title"},
+                new Employee{Email="Emails",Name="Test :: " + Guid.NewGuid().ToString(),Phone="234",Title="title"},
+                new Employee{Email="Emailsd",Name="Test :: " + Guid.NewGuid().ToString(),Phone="234",Title="title"},
+            };
+            company.EmpList = emp;
+            _bonusRepo.InsertCompanyWithEmployee(company);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult deleteDummy()
+        {
+            return View();
+        }
+        
 
 
         public IActionResult Privacy()
