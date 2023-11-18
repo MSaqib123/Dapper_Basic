@@ -11,5 +11,8 @@ namespace Dapper_Basic.Models
         public string Phone { get; set; }
         public string Title { get; set; }
         public int CompanyId { get; set; }
+
+        //[Write(false)]
+        public virtual Company Company { get; set; }
     }
 }

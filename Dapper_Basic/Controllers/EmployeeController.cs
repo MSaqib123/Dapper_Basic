@@ -21,7 +21,36 @@ namespace Dapper_Basic.Controllers
         public IActionResult Index()
         {
             EmployeeVM vm = new EmployeeVM();
-            vm.Employees = _repo.GetAll();
+
+            /*
+             _______________ 1... Single Model get ______________
+             vm.Employees = _repo.GetAll();
+            */
+
+
+            /*
+             _______________ 2... N + 1 __________________________
+             this is Bad Logic to get   Multiple Models Record
+             ---- if we have 11 Record
+             ---- then we ha 10 Calles to database
+             ---- what will happend if we have  10000 of records
+            */
+            #region N+1
+            var employees = _repo.GetAll();
+            foreach (var obj in employees)
+            {
+                obj.Company = _repoComp.Find(obj.CompanyId);
+            }
+            vm.Employees = employees;
+            #endregion
+
+            /*
+             _______________ 3... N + 1 __________________________
+             this is Bad Logic to get   Multiple Models Record
+             ---- if we have 11 Record
+             ---- then we ha 10 Calles to database
+             ---- what will happend if we have  10000 of records
+            */ 
             return View(vm);
         }
 

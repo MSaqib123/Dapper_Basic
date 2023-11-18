@@ -12,6 +12,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Company</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -23,6 +24,15 @@
                 <td>@item.Name</td>
                 <td>@item.Email</td>
                 <td>@item.Phone</td>
+                <td>
+                    @if(item.Company != null){
+                        <b>@item.Company.Name</b>
+                    }
+                    else
+                    {
+                        <b>---</b>
+                    }
+                </td>
                 <td>
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a class="btn btn-primary" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
