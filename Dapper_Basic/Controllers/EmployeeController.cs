@@ -4,6 +4,7 @@ using Dapper_Basic.VM;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.ValueGeneration.Internal;
+using System.ComponentModel.Design;
 
 namespace Dapper_Basic.Controllers
 {
@@ -73,7 +74,6 @@ namespace Dapper_Basic.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(EmployeeVM vm)
         {
             if (ModelState.IsValid)
@@ -84,7 +84,17 @@ namespace Dapper_Basic.Controllers
             }
             else
             {
-                return View();
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var error in modelState.Errors)
+                    {
+                        // Log or print the error messages
+                        Console.WriteLine($"Error: {error.ErrorMessage}");
+                    }
+                }
+                IEnumerable<SelectListItem> compList = _repoComp.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
+                vm.ListCompany = compList;
+                return View(vm);
             }
         }
 

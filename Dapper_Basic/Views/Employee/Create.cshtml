@@ -1,7 +1,6 @@
 ﻿@model EmployeeVM
 
 <form asp-action="Create" method="post">
-    @Html.AntiForgeryToken()
     <div class="mb-3">
         <label for="" class="form-label">Name</label>
         <input class="form form-control" type="text" id="" asp-for="Employee.Name">
