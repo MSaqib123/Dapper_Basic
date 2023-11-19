@@ -68,20 +68,21 @@ namespace Dapper_Basic.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             EmployeeVM vm = new EmployeeVM();
-            IEnumerable<SelectListItem> compList = _repoComp.GetAll().Select(x => new SelectListItem{Value = x.Id.ToString() , Text = x.Name});
+            //List<SelectListItem> compList = _repoComp.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
+            List<SelectListItem> compList = (await _repoComp.GetAll()).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name }).ToList();
             vm.ListCompany = compList;
             return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Create(EmployeeVM vm)
+        public async Task<IActionResult> Create(EmployeeVM vm)
         {
             if (ModelState.IsValid)
             {
-                _repo.Add(vm.Employee);
+                await _repo.Add(vm.Employee);
                 TempData["Success"] = "Inserted Successfuly";
                 return RedirectToAction("Index");
             }
@@ -95,18 +96,18 @@ namespace Dapper_Basic.Controllers
                         Console.WriteLine($"Error: {error.ErrorMessage}");
                     }
                 }
-                IEnumerable<SelectListItem> compList = _repoComp.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
+                IEnumerable<SelectListItem> compList = (await _repoComp.GetAll()).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
                 vm.ListCompany = compList;
                 return View(vm);
             }
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
             EmployeeVM vm = new EmployeeVM();
-            vm.Employee = _repo.Find(id);
-            IEnumerable<SelectListItem> compList = _repoComp.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
+            vm.Employee = await _repo.Find(id);
+            IEnumerable<SelectListItem> compList = (await _repoComp.GetAll()).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
             vm.ListCompany = compList;
             if (vm.Employee == null)
             {
@@ -117,25 +118,25 @@ namespace Dapper_Basic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(EmployeeVM vm)
+        public async Task<IActionResult> Edit(EmployeeVM vm)
         {
             if (ModelState.IsValid)
             {
-                _repo.Update(vm.Employee);
+                await _repo.Update(vm.Employee);
                 TempData["Success"] = "Updated Successfuly";
                 return RedirectToAction("Index");
             }
             else
             {
-                IEnumerable<SelectListItem> compList = _repoComp.GetAll().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
+                IEnumerable<SelectListItem> compList =(await _repoComp.GetAll()).Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Name });
                 vm.ListCompany = compList;
                 return View(vm);
             }
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var obj = _repo.Find(id);
+            var obj = await _repo.Find(id);
             if (obj == null)
             {
                 return NotFound();
