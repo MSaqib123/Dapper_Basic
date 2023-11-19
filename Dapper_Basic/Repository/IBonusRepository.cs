@@ -10,5 +10,6 @@ namespace Dapper_Basic.Repository
         void InsertCompanyWithEmployee(Company obj);
         void RemoveRange(int[] companyId);
         List<Company> FilterCompanyByName(string name);
+        void InsertCompanyWithEmployeeWithTransaction(Company obj);
     }
 }

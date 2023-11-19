@@ -56,7 +56,7 @@ namespace Dapper_Basic.Controllers
                 new Employee{Email="Emailsd",Name="Test :: " + Guid.NewGuid().ToString(),Phone="234",Title="title"},
             };
             company.EmpList = emp;
-            _bonusRepo.InsertCompanyWithEmployee(company);
+            _bonusRepo.InsertCompanyWithEmployeeWithTransaction(company);
             return RedirectToAction("Index");
         }
 
