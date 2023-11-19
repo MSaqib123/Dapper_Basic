@@ -7,6 +7,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton<ICompanyRepository, CompanyRepository>();
 builder.Services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddSingleton<IBonusRepository, BonusRepository>();
+builder.Services.AddSingleton<IDapperAsprocRepo, DapperAsprocRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
