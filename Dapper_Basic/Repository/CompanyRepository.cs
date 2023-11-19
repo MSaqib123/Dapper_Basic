@@ -150,7 +150,7 @@ namespace Dapper_Basic.Repository
         */
         #endregion
 
-        //____________ 3. Dapper Contrib Approch _________
+        //____________ 4. Dapper Async _________
         #region Assync _ Dapper
         public async Task<List<Company>> GetAll()
         {

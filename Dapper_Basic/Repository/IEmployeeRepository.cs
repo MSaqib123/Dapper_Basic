@@ -4,10 +4,10 @@ namespace Dapper_Basic.Repository
 {
     public interface IEmployeeRepository
     {
-        Employee Add(Employee obj);
-        Employee Find(int id);
-        List<Employee> GetAll();
+        Task<Employee> Add(Employee obj);
+        Task<Employee> Find(int id);
+        Task<List<Employee>> GetAll();
         void Remove(int Id);
-        Employee Update(Employee obj);   
+        Task<Employee> Update(Employee obj);   
     }
 }

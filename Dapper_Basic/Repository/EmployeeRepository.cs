@@ -117,27 +117,56 @@ namespace Dapper_Basic.Repository
         //____ Note  ____
         //1. for Contrib  method  ---> Model must have  [Key]  dapper.attibute in Model
         //2. for Contrib  ---> add   Table()   attibute in Module with SQL table Name
-        public Employee Add(Employee obj)
+        //public Employee Add(Employee obj)
+        //{
+        //    var id = _db.Insert(obj);
+        //    obj.Id =(int)id;
+        //    return obj;
+        //}
+        //public Employee Find(int id)
+        //{
+        //    return _db.Get<Employee>(id);
+        //}
+        //public List<Employee> GetAll()
+        //{
+        //    return _db.GetAll<Employee>().ToList();
+        //}
+        //public void Remove(int Id)
+        //{
+        //    _db.Delete(new Company { Id = Id });
+        //}
+        //public Employee Update(Employee obj)
+        //{
+        //    _db.Update(obj);
+        //    return obj;
+        //}
+        #endregion
+
+
+        //____________ 4. Dapper Async _________
+        #region Assync _ Dapper
+        public async Task<Employee> Add(Employee obj)
         {
-            var id = _db.Insert(obj);
-            obj.Id =(int)id;
+            var id = await _db.InsertAsync(obj);
+            obj.Id = (int)id;
             return obj;
         }
-        public Employee Find(int id)
+        public async Task<Employee> Find(int id)
         {
-            return _db.Get<Employee>(id);
+            return await _db.GetAsync<Employee>(id);
         }
-        public List<Employee> GetAll()
+        public async Task<List<Employee>> GetAll()
         {
-            return _db.GetAll<Employee>().ToList();
+            var list = await _db.GetAllAsync<Employee>();
+            return list.ToList();
         }
-        public void Remove(int Id)
+        public async void Remove(int Id)
         {
-            _db.Delete(new Company { Id = Id });
+            await _db.DeleteAsync(new Company { Id = Id });
         }
-        public Employee Update(Employee obj)
+        public async Task<Employee> Update(Employee obj)
         {
-            _db.Update(obj);
+            await _db.UpdateAsync(obj);
             return obj;
         }
         #endregion
