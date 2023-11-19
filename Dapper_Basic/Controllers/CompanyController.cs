@@ -19,14 +19,14 @@ namespace Dapper_Basic.Controllers
             _bonRepo = bonRepo;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _repo.GetAll();
+            var list =await _repo.GetAll();
             return View(list);
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
             Company obj = new Company();
             return View(obj);
@@ -34,11 +34,11 @@ namespace Dapper_Basic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Company obj)
+        public async Task<IActionResult> Create(Company obj)
         {
             if (ModelState.IsValid)
             {
-                _repo.Add(obj);
+                await _repo.Add(obj);
                 TempData["Success"] = "Inserted Successfuly";
                 return RedirectToAction("Index");
             }
@@ -49,9 +49,9 @@ namespace Dapper_Basic.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var obj = _repo.Find(id);
+            var obj = await _repo.Find(id);
             if (obj == null)
             {
                 return NotFound();
@@ -61,11 +61,11 @@ namespace Dapper_Basic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Company obj)
+        public async Task<IActionResult> Edit(Company obj)
         {
             if (ModelState.IsValid)
             {
-                _repo.Update(obj);
+                await _repo.Update(obj);
                 TempData["Success"] = "Updated Successfuly";
                 return RedirectToAction("Index");
             }
@@ -75,9 +75,9 @@ namespace Dapper_Basic.Controllers
             }
         }
 
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var obj = _repo.Find(id);
+            var obj = await _repo.Find(id);
             if (obj == null)
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace Dapper_Basic.Controllers
         }
 
         [HttpGet]
-        public IActionResult Detail(int id)
+        public async Task<IActionResult> Detail(int id)
         {
             Company obj = new Company();
             obj = _bonRepo.GetCompanyWithAllEmployee(id);
