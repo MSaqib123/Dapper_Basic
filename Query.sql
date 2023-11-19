@@ -169,9 +169,58 @@ end
 --===================================================
 -- 3. Dekpartment
 --===================================================
-create table tblEmployee
+create table tblDepartment
 (
 	id int primary key identity,
-	name varchar(50),
+	name varchar(50), 
 	description varchar(max)
 )
+
+
+create Procedure spGetDepartemnts
+as
+begin
+	select * from tblDepartment	
+end
+
+
+create Procedure spGetCompanyById
+@id int
+as
+begin
+	select * from tblDepartment	
+	where id = @id
+end
+
+exec spInsertDepartemnts 'HR' , 'the best Human Resource'
+create Procedure spInsertDepartemnts
+@name varchar(50),
+@description varchar(max)
+as
+begin
+	insert into tblDepartment(name,description)
+	values (@name,@description)
+end
+
+
+
+create Procedure spUpdateDepartemnt
+@id int,
+@name varchar(50),
+@description varchar(max)
+as
+begin
+	update tblDepartment
+	set name = @name, description = @description
+	where id = @id
+end
+
+
+
+create Procedure spDeleteDepartemnt
+@id int
+as
+begin
+	DELETE from tblDepartment
+	where id = @id
+end
