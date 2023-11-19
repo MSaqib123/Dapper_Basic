@@ -121,6 +121,7 @@ namespace Dapper_Basic.Repository
         //____ Note  ____
         //1. for Contrib  method  ---> Model must have  [Key]  dapper.attibute in Model
         //2. for Contrib  ---> add   Table()   attibute in Module with SQL table Name
+        /*
         public List<Company> GetAll()
         {
             return _db.GetAll<Company>().ToList();
@@ -145,6 +146,37 @@ namespace Dapper_Basic.Repository
         public void Remove(int Id)
         {
             _db.Delete(new Company { Id = Id});
+        }
+        */
+        #endregion
+
+        //____________ 3. Dapper Contrib Approch _________
+        #region Assync _ Dapper
+        public async Task<List<Company>> GetAll()
+        {
+            var list = await _db.GetAllAsync<Company>();
+            return list.ToList();
+        }
+
+        public async Task<Company> Find(int id)
+        {
+            return await _db.GetAsync<Company>(id);
+        }
+
+        public async Task<Company> Add(Company obj)
+        {
+            var id = await _db.InsertAsync(obj);
+            obj.Id = (int)id;
+            return obj;
+        }
+        public async Task<Company> Update(Company obj)
+        {
+            await _db.UpdateAsync(obj);
+            return obj;
+        }
+        public async void Remove(int Id)
+        {
+            await _db.DeleteAsync(new Company { Id = Id });
         }
         #endregion
     }

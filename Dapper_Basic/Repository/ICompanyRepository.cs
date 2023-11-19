@@ -4,11 +4,11 @@ namespace Dapper_Basic.Repository
 {
     public interface ICompanyRepository
     {
-        Company Add(Company obj);
-        Company Find(int id);
-        List<Company> GetAll();
+        Task<Company> Add(Company obj);
+        Task<Company> Find(int id);
+        Task<List<Company>> GetAll();
         void Remove(int Id);
-        Company Update(Company obj);
+        Task<Company> Update(Company obj);
         
     }
 }
