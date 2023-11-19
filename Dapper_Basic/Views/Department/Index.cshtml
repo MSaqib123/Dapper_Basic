@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<Department>
 
 <div class="d-flex justify-content-between align-items-center">
-    <h1>Company List</h1>
+    <h1>Departmet List</h1>
     <a class="btn btn-primary" asp-action="Create">Create</a>
 </div>
 
 <table class="table table-striped">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Name</th>
             <th>Description</th>
             <th>Action</th>
@@ -19,6 +20,7 @@
             <tr>
                 <td>@item.Id</td>
                 <td>@item.Name</td>
+                <td>@item.Description</td>
                 <td>
                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                     <a class="btn btn-warning" asp-action="Detail" asp-route-id="@item.Id">Detail</a>

@@ -166,3 +166,12 @@ begin
 end
 
 
+--===================================================
+-- 3. Dekpartment
+--===================================================
+create table tblEmployee
+(
+	id int primary key identity,
+	name varchar(50),
+	description varchar(max)
+)

@@ -30,17 +30,17 @@ namespace Dapper_Basic.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            Company obj = new Company();
+            Department obj = new Department();
             return View(obj);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Company obj)
+        public async Task<IActionResult> Create(Department obj)
         {
             if (ModelState.IsValid)
             {
-                await _repo.Add(obj);
+                _ProcRepo.Execute("spInsertDepartemnts", new {name = obj.Name , description = obj.Description });
                 TempData["Success"] = "Inserted Successfuly";
                 return RedirectToAction("Index");
             }
@@ -53,7 +53,8 @@ namespace Dapper_Basic.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var obj = await _repo.Find(id);
+            //var obj = await _repo.Find(id);
+            var obj = _ProcRepo.Single<Department>("spGetCompanyById", new {id});
             if (obj == null)
             {
                 return NotFound();
@@ -63,11 +64,12 @@ namespace Dapper_Basic.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Company obj)
+        public async Task<IActionResult> Edit(Department obj)
         {
             if (ModelState.IsValid)
             {
-                await _repo.Update(obj);
+                //await _repo.Update(obj);
+                _ProcRepo.Execute("spUpdateDepartemnt", obj);
                 TempData["Success"] = "Updated Successfuly";
                 return RedirectToAction("Index");
             }
@@ -79,12 +81,12 @@ namespace Dapper_Basic.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
-            var obj = await _repo.Find(id);
+            var obj = _ProcRepo.Single<Company>("spGetCompanyById", new { id });
             if (obj == null)
             {
                 return NotFound();
             }
-            _repo.Remove(id);
+            _ProcRepo.Execute("spDeleteDepartemnt", new { id });
             return RedirectToAction("Index");
         }
     }
